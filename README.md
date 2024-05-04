@@ -14,9 +14,11 @@ Install Node.js from the official website: https://nodejs.org/
 
 If you have a different version of Node.js installed on your machine, you can use a version manager like NVM to switch between different versions.
 
+```
 $ nvm install 20.9.0
 $ nvm use 20.9.0
 $ node -v
+```
 
 ### SST
 Big Transit uses [sst](https://ion.sst.dev/) to define the application architecture and configure, debug and deploy the necessary AWS infrastructure. Follow the SST guide to [install the SST CLI](https://ion.sst.dev/docs/reference/cli)

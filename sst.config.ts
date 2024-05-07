@@ -14,15 +14,24 @@
  * ├─ sst.config.ts
  * ├─ package.json
  * ├─ packages
- * │  └─ functions
+ * │  ├─ core
+ * │  └─ functions
  * └─ infra
  * ```
  *
  * The `packages/` directory includes:
  *
+ * - `core/` 
+ * 
+ *  The core directory includes the domain logic implementation for Big Transit, used 
+ *  exported as modules and used within the function implementations.
+ *
  * - `functions/`
  *
- *   This directory includes our API Lambda functions. 
+ *  The functions directory includes the Big Transit API Lambda function implementations.
+ *  Wherever possible domain logic will be imported from /core, making the Lambda and 
+ *  API code unaware of these details, simply calling into these modules to compose the 
+ *  logic together.
  *
  *  #### Infrastructure
  *

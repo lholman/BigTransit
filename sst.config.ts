@@ -23,15 +23,15 @@
  *
  * - `core/` 
  * 
- *  The core directory includes the domain logic implementation for Big Transit, used 
- *  exported as modules and used within the function implementations.
+ *  The core directory includes the business logic implementation for Big Transit, exported 
+ *  as modules and used within the function implementations.
  *
  * - `functions/`
  *
  *  The functions directory includes the Big Transit API Lambda function implementations.
- *  Wherever possible domain logic will be imported from /core, making the Lambda and 
- *  API code unaware of these details, simply calling into these modules to compose the 
- *  logic together.
+ *  Wherever possible domain specific business logic will be imported from /core, making  
+ *  the Lambda and API code unaware of these details, simply calling into these modules 
+ *  to compose the logic together.
  *
  *  #### Infrastructure
  *

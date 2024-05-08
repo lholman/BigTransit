@@ -2,9 +2,11 @@
   "name": "bigtransit",
   "version": "1.0.0",
   "description": "Convention based Continuous Delivery pipeline visibility for everyone",
-  "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" \u0026\u0026 exit 1"
+    "test": "sst dev vitest run"
   },
   "keywords": [],
   "author": "",

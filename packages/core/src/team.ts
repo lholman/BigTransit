@@ -1,3 +1,6 @@
+import { Resource } from "sst";
+import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
+
 export * as Team from "./team"
 
 interface Team {

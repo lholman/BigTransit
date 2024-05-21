@@ -14,10 +14,14 @@ Install Node.js from the official website: https://nodejs.org/
 
 If you have a different version of Node.js installed on your machine, you can use a version manager like NVM to switch between different versions.
 
+https://nodejs.org/en/download/package-manager
+
 ```
-$ nvm install 20.9.0
-$ nvm use 20.9.0
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+$ nvm install 20
+-- $ nvm use 20.9.0
 $ node -v
+$ npm -v
 ```
 
 ### SST

@@ -19,7 +19,6 @@ https://nodejs.org/en/download/package-manager
 ```
 $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 $ nvm install 20
--- $ nvm use 20.9.0
 $ node -v
 $ npm -v
 ```

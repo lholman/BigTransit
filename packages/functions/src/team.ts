@@ -7,7 +7,8 @@ export async function getTeam() {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(team),
+    statusCode: 200,
+    body: JSON.stringify(team),   
   };
 }
 

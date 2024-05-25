@@ -32,12 +32,23 @@ You will need a target AWS account for Big Transit to be deployed to. Follow the
 ## Developing
 Once the three requirements Node.js, SST and AWS are configured as above, simply.
 
-1. Run `npm install`
-1. Run `sst dev`
+```
+npm install
+sst dev
+```
 
 This will start Big Transit using SST Live. Live is a feature of SST that lets you test changes made to your functions in milliseconds. Your changes work without having to redeploy. And they can be invoked remotely. [Find out more about Live here](https://ion.sst.dev/docs/live/)
+
+## Testing 
+Big Transit uses Vitest for unit testing domain code implementation, i.e. the business logic within the `packages/core/src` folders for each domain. To run tests use the handy npm alias.
+
+`npm test`
+
+To read more about Vitest see [Adding Vitest to your project](https://vitest.dev/guide/#adding-vitest-to-your-project)
 
 ## Deploying
 SST is also used for deploying. 
 
-Run `sst deploy`
+```
+sst deploy
+```

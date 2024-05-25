@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sst": "ion"
+    "sst": "ion",
+    "vitest": "^1.6.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.137"

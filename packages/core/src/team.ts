@@ -1,21 +1,25 @@
 import { Resource } from "sst";
-import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDB, DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
+const client = new DynamoDBClient();
 
 export * as Team from "./team"
 
-interface Team {
+export interface Info {
     teamID: string;
     name: string;
 }
 
-export function create(name: string) {
-    return undefined as Team;
+export function newTeamWithName(_name: string) {
+    return {
+        teamID: "1",
+        name: _name 
+    } as Info
 }
 
 export function fromID(_teamID: string) {
-    return "Stream Aligned Team 1"
+    return undefined as Info[];
 }
 
 export function list() {
-    return undefined as Team[];
+    return undefined as Info[];
 }

@@ -6,3 +6,10 @@ it("create a team", async () => {
 
     expect(team.teamID).toBe(1);
 })
+
+it("get a team by ID", async () => {
+    const team = await Team.fromID(1);
+
+    expect(team.teamID).toBe(1);
+    expect(team.name).toBe("Retention Team");   
+})

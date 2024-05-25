@@ -12,8 +12,11 @@ export function newTeamWithName(_name: string) {
     } as Info
 }
 
-export function fromID(_teamID: string) {
-    return undefined as Info[];
+export function fromID(_teamID: number) {
+    return {
+        teamID: 1,
+        name: "Retention Team" 
+    } as Info
 }
 
 export function list() {

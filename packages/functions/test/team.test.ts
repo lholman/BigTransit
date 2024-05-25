@@ -6,8 +6,10 @@ describe('Team API', () => {
     const response = await axios.get('https://f3up0rb620.execute-api.eu-west-2.amazonaws.com/teams/1', {
     });
 
-    const team = JSON.parse(response.data.body);
+    const headers = response.headers;
+    expect(headers).toHaveProperty('content-type');
 
+    const team = JSON.parse(response.data.body);
     expect(team.teamID).toBe(1);
     expect(team.name).toBe('Retention Team');
   });

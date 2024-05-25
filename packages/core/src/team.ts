@@ -6,6 +6,7 @@ export interface Info {
 }
 
 export function newTeamWithName(_name: string) {
+    
     return {
         teamID: 1,
         name: _name 

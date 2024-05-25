@@ -1,14 +1,15 @@
-import { Team } from "@bigtransit/core/team";
+import { Team } from "@bigtransit/core/Team";
 
 export async function getTeam() {
+  const team = Team.fromID(1);
   return {
-    body: `${Team.fromID("1")}.`,
+    body: team,
   };
 }
 
 export async function newTeamWithName(_name: string) {
-  const team = Team.newTeamWithName(_name.body);
+  const team = Team.newTeamWithName(_name);
   return {
-    body: team,
+    body: team.teamID,
   };
 }

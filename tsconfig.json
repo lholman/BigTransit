@@ -1,9 +1,7 @@
 {
+    "exclude": ["packages"],
     "compilerOptions": {
-      "baseUrl": "src/",
-
-    },
-    "include": [
-      "src"
-    ]
+        "module": "esnext",
+        "moduleResolution": "node"
+    }
 }

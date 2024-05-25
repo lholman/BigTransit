@@ -5,6 +5,7 @@ it("create a team", async () => {
     const team = await Team.newTeamWithName("Stream aligned team");
 
     expect(team.teamID).toBe(1);
+    expect(team.name).toBe("Stream aligned team");
 })
 
 it("get a team by ID", async () => {

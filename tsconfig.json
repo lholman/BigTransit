@@ -2,7 +2,7 @@
     "exclude": ["packages"],
     "compilerOptions": {
         "module": "ESNext",
-        "target": "ESNext",
+        "target": "es2015",
         "moduleResolution": "node",
         "esModuleInterop": true,
     }

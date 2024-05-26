@@ -7,5 +7,5 @@ export const api = new sst.aws.ApiGatewayV2("BigTransitApi")
   });
   api.route("POST /teams", {
     link: [database],
-    handler: "./packages/functions/src/team.newTeamWithName",
+    handler: "./packages/functions/src/team.newTeam",
   });

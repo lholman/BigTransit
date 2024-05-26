@@ -1,6 +1,8 @@
 export * as Team from "./team"
+import { Resource } from "sst";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { PutCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { v4 as uuidv4 } from 'uuid';
 
 interface Team {
     teamID: string;
@@ -10,7 +12,7 @@ interface Team {
 interface Item {
     PK: string;
     SK: string;
-    Name: string;
+    name: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -18,12 +20,33 @@ interface Item {
 const client = new DynamoDBClient({});
 const ddbDocClient = DynamoDBDocumentClient.from(client);
 
-export function newTeamWithName(_name: string) {
+export async function newTeamWithName(_name: string): Promise<Item> {
     
-    return {
-        teamID: "1",
-        name: _name 
-    } as Team
+    const team: Team = {
+        teamID: uuidv4(),
+        name: _name
+    };
+
+    const item: Item = {
+        PK: `TEAM#${team.teamID}`,
+        SK: 'INFO',
+        name: _name,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    };
+
+    const params = {
+        TableName: Resource.BigTransit.name,
+        Item: item
+    };
+
+    try {
+        await ddbDocClient.send(new PutCommand(params));
+        return item;
+    } catch (error) {
+        console.error('Error creating team:', error);
+        throw error;
+    }
 }
 
 export function fromID(_teamID: number) {
@@ -34,5 +57,5 @@ export function fromID(_teamID: number) {
 }
 
 export function list() {
-    return undefined as Info[];
+    return undefined as Item[];
 }

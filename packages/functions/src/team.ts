@@ -2,7 +2,6 @@ import { Team } from "@bigtransit/core/Team";
 
 export async function getTeam() {
   const team = Team.fromID(1);
-  console.log(JSON.stringify(team));
   return {
     headers: {
       'Content-Type': 'application/json',

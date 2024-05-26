@@ -1,16 +1,19 @@
-import { expect, it } from "vitest";
+import { expect, it, describe } from "vitest";
 import { Team } from "@bigtransit/core/team";
+import { validate as uuidValidate } from 'uuid';
 
-it("create a team", async () => {
-    const team = await Team.newTeamWithName("Stream aligned team");
+describe('Team domain', function() {
+    it("creates a team", () => {
+        const team = Team.newTeamWithName("Stream aligned team");
 
-    expect(team.teamID).toBe(1);
-    expect(team.name).toBe("Stream aligned team");
-})
+        expect(team.teamID).toBe("1");
+        expect(team.name).toBe("Stream aligned team");
+    })
 
-it("get a team by ID", async () => {
-    const team = await Team.fromID(1);
+    it("gets a team by ID", async () => {
+        const team = await Team.fromID(1);
 
-    expect(team.teamID).toBe(1);
-    expect(team.name).toBe("Retention Team");   
-})
+        expect(uuidValidate(team.teamID)).toBe(true);
+        expect(team.name).toBe("Retention Team");   
+    })
+});

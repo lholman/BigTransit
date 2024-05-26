@@ -8,6 +8,10 @@
     },
     "dependencies": {
         "@aws-sdk/client-dynamodb": "^3.569.0",
-        "packages": "^0.0.8"
+        "packages": "^0.0.8",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@types/uuid": "^9.0.8"
     }
 }

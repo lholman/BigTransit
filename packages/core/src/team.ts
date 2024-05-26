@@ -1,4 +1,6 @@
 export * as Team from "./team"
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { PutCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 
 interface Team {
     teamID: string;
@@ -12,6 +14,9 @@ interface Item {
     createdAt: string;
     updatedAt: string;
 }
+
+const client = new DynamoDBClient({});
+const ddbDocClient = DynamoDBDocumentClient.from(client);
 
 export function newTeamWithName(_name: string) {
     

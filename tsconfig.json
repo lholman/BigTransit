@@ -1,7 +1,9 @@
 {
     "exclude": ["packages"],
     "compilerOptions": {
-        "module": "esnext",
-        "moduleResolution": "node"
+        "module": "ESNext",
+        "target": "ESNext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
     }
 }

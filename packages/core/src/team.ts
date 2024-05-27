@@ -1,7 +1,7 @@
 export * as Team from "./team"
 import { Resource } from "sst";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { PutCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { PutCommand, GetCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuidv4 } from 'uuid';
 
 interface Team {
@@ -49,13 +49,27 @@ export async function newTeamWithName(_name: string): Promise<Item> {
     }
 }
 
-export function fromID(_teamID: number) {
-    return {
-        teamID: "1",
-        name: "Retention Team" 
-    } as Team
-}
+export async function fromID(teamID: string): Promise<Team | null> {
+    const params = {
+        TableName: Resource.BigTransit.name,
+        Key: {
+            PK: `TEAM#${teamID}`,
+            SK: 'INFO'
+        }
+    };
 
-export function list() {
-    return undefined as Item[];
+    try {
+        const result = await ddbDocClient.send(new GetCommand(params));
+        if (result.Item) {
+            return {
+                teamID: teamID,
+                name: result.Item.name
+            } as Team;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error retrieving team:', error);
+        throw error;
+    }
 }

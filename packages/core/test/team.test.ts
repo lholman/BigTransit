@@ -11,10 +11,9 @@ describe('Team domain', function() {
         expect(team.name).toBe(teamName);
     })
 
-    // it("gets a team by ID", async () => {
-    //     const team = await Team.fromID(1);
+    it("gets a team by ID", async () => {
+        const team = await Team.fromID("f25e22a1-1924-4c87-bb7f-46b6d087d80f");
 
-    //     expect(uuidValidate(team.teamID)).toBe(true);
-    //     expect(team.name).toBe("Retention Team");   
-    // })
+        expect(team.name).toBe("Stream aligned team");   
+    })
 });

@@ -42,7 +42,11 @@ This will start Big Transit using SST Live. Live is a feature of SST that lets y
 ## Testing 
 Big Transit uses Vitest for unit testing domain code implementation, i.e. the business logic within the `packages/core/src` folders for each domain. To run tests use the handy npm alias.
 
-`npm test`
+`npm run test`
+
+Big Transit also uses Vitest for acceptance testing the API and Lambda function implementation, i.e. the code within the `packages/function/src` folders. To run these tests use.
+
+`npm run acceptance`
 
 To read more about Vitest see [Adding Vitest to your project](https://vitest.dev/guide/#adding-vitest-to-your-project)
 

@@ -6,7 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "sst dev vitest run"
+    "unit": "sst dev vitest run core",
+    "acceptance": "sst dev vitest run functions"
   },
   "keywords": [],
   "author": "",

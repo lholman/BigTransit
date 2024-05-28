@@ -11,6 +11,9 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    reporters: ['verbose']
+    reporters: ['verbose'],
+    coverage: {
+          reporter: ['text'],
+    },    
   }
 });

@@ -1,8 +1,16 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
+import path from 'path';
 
 export default defineConfig({
-  test: {
-    reporters: ['verbose']
+  resolve: {
+    alias: {
+      '@bigtransit/core': path.resolve(__dirname, 'packages/core/src')
+    }
   },
-})
+  test: {
+    globals: true,
+    environment: 'node',
+    reporters: ['verbose']
+  }
+});

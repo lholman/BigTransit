@@ -83,4 +83,13 @@ describe('Team domain', function() {
     expect(calls).toHaveLength(1);
   });
 
+  it("should handle DynamoDB GetCommand error gracefully", async () => {
+    ddbMock.on(GetCommand).rejects(new Error("DynamoDB error"));
+
+    await expect(fromID("f25e22a1-1924-4c87-bb7f-46b6d087d80f", resourceMock)).rejects.toThrow("DynamoDB error");
+
+    const calls = ddbMock.commandCalls(GetCommand);
+    expect(calls).toHaveLength(1);
+  });
+
 });

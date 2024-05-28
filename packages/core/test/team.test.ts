@@ -36,6 +36,15 @@ describe('Team domain', function() {
     expect(calls).toHaveLength(1);
   });
 
+  it("should handle DynamoDB PutCommand error gracefully", async () => {
+    ddbMock.on(PutCommand).rejects(new Error("DynamoDB error"));
+
+    await expect(newTeamWithName("Stream aligned team", resourceMock)).rejects.toThrow("DynamoDB error");
+    
+    const calls = ddbMock.commandCalls(PutCommand);
+    expect(calls).toHaveLength(1);
+  });  
+
   it("should call sst Resource once to set DynamoDB table name", async () => {
     ddbMock.on(GetCommand).resolves({
       Item: { teamId: "f25e22a1-1924-4c87-bb7f-46b6d087d80f", name: "Stream aligned team" },
@@ -50,6 +59,7 @@ describe('Team domain', function() {
 
     expect(resourceMock.BigTransit.name).toBe("mocked-table-name");
   });
+
   it("should call GetCommand to get team by ID from DynamoDB", async () => {
     ddbMock.on(GetCommand).resolves({
       Item: { teamId: "f25e22a1-1924-4c87-bb7f-46b6d087d80f", name: "Stream aligned team" },
@@ -60,4 +70,17 @@ describe('Team domain', function() {
     const calls = ddbMock.commandCalls(GetCommand);
     expect(calls).toHaveLength(1);
   });  
+
+  it("should return null for non-existing team ID", async () => {
+    ddbMock.on(GetCommand).resolves({
+      Item: null,
+    });
+
+    const team = await fromID("non-existing-id", resourceMock);
+    expect(team).toBeNull();
+
+    const calls = ddbMock.commandCalls(GetCommand);
+    expect(calls).toHaveLength(1);
+  });
+
 });

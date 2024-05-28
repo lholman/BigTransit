@@ -52,7 +52,7 @@ export async function newTeamWithName(_name: string): Promise<Item> {
 export async function fromID(teamID: string, resource = DefaultResource): Promise<Team | null> {
     
     const params = {
-        TableName: Resource.BigTransit.name,
+        TableName: resource.BigTransit.name,
         Key: {
             PK: `TEAM#${teamID}`,
             SK: 'INFO'

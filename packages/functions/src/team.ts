@@ -1,4 +1,4 @@
-import { Team } from "@bigtransit/core/Team";
+import { Team } from "@bigtransit/core/team";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 export async function getTeam() {

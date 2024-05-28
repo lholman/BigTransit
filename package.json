@@ -5,18 +5,32 @@
   "workspaces": [
     "packages/*"
   ],
+  "exports": {
+    "./core/*": "./packages/core/src/*"
+  },
   "scripts": {
-    "unit": "sst dev vitest run core",
+    "unit": "vitest run core",
     "acceptance": "sst dev vitest run functions"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.584.0",
+    "@aws-sdk/lib-dynamodb": "^3.584.0",
+    "axios": "^1.7.2",
+    "packages": "^0.0.8",
     "sst": "ion",
-    "vitest": "^1.6.0"
+    "typescript": "^5.4.5",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@types/aws-lambda": "8.10.137"
+    "@aws-sdk/types": "^3.577.0",
+    "@smithy/types": "^3.0.0",
+    "@types/aws-lambda": "8.10.137",
+    "@types/node": "^20.12.12",
+    "@types/uuid": "^9.0.8",
+    "aws-sdk-client-mock": "^4.0.0",
+    "vitest": "^1.6.0"
   }
 }

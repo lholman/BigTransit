@@ -1,5 +1,5 @@
 export * as Team from "./team"
-import { Resource } from "sst";
+import { Resource as DefaultResource } from "sst";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { PutCommand, GetCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuidv4 } from 'uuid';
@@ -49,7 +49,8 @@ export async function newTeamWithName(_name: string): Promise<Item> {
     }
 }
 
-export async function fromID(teamID: string): Promise<Team | null> {
+export async function fromID(teamID: string, resource = DefaultResource): Promise<Team | null> {
+    
     const params = {
         TableName: Resource.BigTransit.name,
         Key: {

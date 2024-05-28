@@ -29,6 +29,7 @@ describe('Team domain', function() {
     const item = await newTeamWithName("Stream aligned team", resourceMock);
     
     expect(item.PK).toMatch(/^TEAM#/);
+    expect(item.SK).toMatch("INFO");
     expect(item.name).toBe("Stream aligned team");
     
     const calls = ddbMock.commandCalls(PutCommand);

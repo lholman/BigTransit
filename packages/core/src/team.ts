@@ -20,7 +20,7 @@ interface Item {
 const client = new DynamoDBClient({});
 const ddbDocClient = DynamoDBDocumentClient.from(client);
 
-export async function newTeamWithName(_name: string): Promise<Item> {
+export async function newTeamWithName(_name: string, resource = DefaultResource): Promise<Item> {
     
     const team: Team = {
         teamID: uuidv4(),
@@ -36,7 +36,7 @@ export async function newTeamWithName(_name: string): Promise<Item> {
     };
 
     const params = {
-        TableName: Resource.BigTransit.name,
+        TableName: resource.BigTransit.name,
         Item: item
     };
 

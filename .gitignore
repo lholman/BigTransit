@@ -3,3 +3,9 @@
 .sst
 
 node_modules
+
+# Compiled JavaScript files
+*.js
+
+# TypeScript build output
+dist/

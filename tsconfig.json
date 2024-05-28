@@ -11,6 +11,11 @@
       "paths": {
         "@bigtransit/core/*": ["packages/core/src/*"]
       }
-    }
+    },
+    "exclude": [
+      "node_modules",
+      "dist"
+    ]
+    
   }
   

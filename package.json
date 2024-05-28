@@ -9,6 +9,7 @@
     "./core/*": "./packages/core/src/*"
   },
   "scripts": {
+    "build": "npx tsc",
     "unit": "vitest run core --coverage",
     "acceptance": "sst dev vitest run functions"
   },
@@ -21,7 +22,6 @@
     "axios": "^1.7.2",
     "packages": "^0.0.8",
     "sst": "ion",
-    "typescript": "^5.4.5",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
@@ -32,6 +32,7 @@
     "@types/uuid": "^9.0.8",
     "@vitest/coverage-v8": "^1.6.0",
     "aws-sdk-client-mock": "^4.0.0",
+    "typescript": "^5.4.5",
     "vitest": "^1.6.0"
   }
 }

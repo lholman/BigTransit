@@ -55,7 +55,7 @@ describe('Team domain', function() {
 
     const team = await fromID("f25e22a1-1924-4c87-bb7f-46b6d087d80f", resourceMock);
 
-    expect(team.name).toBe("Stream aligned team");
+    expect(team?.name).toBe("Stream aligned team");
 
     const calls = ddbMock.commandCalls(GetCommand);
     expect(calls).toHaveLength(1);

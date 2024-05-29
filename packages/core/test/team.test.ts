@@ -76,7 +76,7 @@ describe('Team domain', function() {
 
   it("should return null for non-existing team ID", async () => {
     ddbMock.on(GetCommand).resolves({
-      Item: null,
+      Item: null as unknown as Record<string, any> | undefined,
     });
 
     const team = await fromID("non-existing-id", resourceMock);

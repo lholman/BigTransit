@@ -16,6 +16,8 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
       - name: Install SST ION deployment CLI
-        run: curl -fsSL https://ion.sst.dev/install | bash
+        run: brew install sst/tap/sst
+      - name: Check SST version
+        run: sst version
       - name: Run TypeScript Build
         run: npm run build        

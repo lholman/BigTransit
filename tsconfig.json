@@ -9,7 +9,8 @@
       "moduleResolution": "node",
       "baseUrl": ".",
       "paths": {
-        "@bigtransit/core/*": ["packages/core/src/*"]
+        "@bigtransit/core/*": ["packages/core/src/*"],
+        "@bigtransit/tests/*": ["packages/core/test/*"]
       }
     },
     "exclude": [

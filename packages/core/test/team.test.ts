@@ -1,7 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { Team, fromID, newTeamWithName } from "@bigtransit/core/team";
+import { fromID, newTeamWithName } from "@bigtransit/core/team";
+import type { ResourceMock } from "@bigtransit/tests/types/ResourceMocks";
+
 
 // Mocking AWS SDK
 const ddbMock = mockClient(DynamoDBDocumentClient);
@@ -11,7 +13,7 @@ beforeEach(() => {
 });
 
 describe('Team domain', function() {
-  let resourceMock;
+  let resourceMock: ResourceMock;
 
   beforeEach(() => {
     resourceMock = {

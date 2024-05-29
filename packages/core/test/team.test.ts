@@ -4,8 +4,6 @@ import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dyn
 import { fromID, newTeamWithName } from "@bigtransit/core/team";
 import type { ResourceMock } from "@bigtransit/tests/types/ResourceMocks";
 
-
-// Mocking AWS SDK
 const ddbMock = mockClient(DynamoDBDocumentClient);
 
 beforeEach(() => {
@@ -20,8 +18,11 @@ describe('Team domain', function() {
       BigTransit: {
         get name() {
           return "mocked-table-name";
-        }
-      }
+        },
+        type: "sst.aws.Dynamo"
+      },
+      App: {},
+      BigTransitApi: {}
     };
   });
 

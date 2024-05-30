@@ -21,7 +21,7 @@
     "@aws-sdk/lib-dynamodb": "^3.584.0",
     "axios": "^1.7.2",
     "packages": "^0.0.8",
-    "sst": "ion",
+    "sst": "^3.0.32",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

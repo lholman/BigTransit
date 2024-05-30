@@ -53,7 +53,7 @@
  */
 
 export default $config({
-  app(input) {
+  app(input: { stage: string; }) {
     return {
       name: "bigtransit",
       removal: input?.stage === "production" ? "retain" : "remove",

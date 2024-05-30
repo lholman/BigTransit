@@ -20,7 +20,6 @@
     "@aws-sdk/client-dynamodb": "^3.584.0",
     "@aws-sdk/lib-dynamodb": "^3.584.0",
     "axios": "^1.7.2",
-    "packages": "^0.0.8",
     "sst": "^3.0.32",
     "uuid": "^9.0.1"
   },

@@ -17,15 +17,9 @@ jobs:
         run: npm install
       - name: Install SST ION deployment CLI
         run: brew install sst/tap/sst
-      - name: Check SST version
+      - name: Check SST Version
         run: sst version
       - name: Run TypeScript Build
         run: npm run build
-      - name: Check for types.d.ts file
-        run: |
-          if [ -f "types.d.ts" ]; then
-            echo "types.d.ts file exists."
-          else
-            echo "types.d.ts file does not exist."
-            exit 1
-          fi                
+      - name: Run Unit Tests
+        run: npm run unit

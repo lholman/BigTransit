@@ -30,6 +30,14 @@ jobs:
         run: npm run build
       - name: Run Unit Tests
         run: npm run unit
+        
+      - name: Archive node_modules and .sst
+        run: tar -czf artifacts.tar.gz node_modules .sst
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: node_modules_and_sst
+          path: artifacts.tar.gz
   Acceptance:
     needs: Commit
     name: Functional acceptance test stage

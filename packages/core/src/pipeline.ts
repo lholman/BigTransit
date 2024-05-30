@@ -4,9 +4,9 @@ interface Pipeline {
 }
 
 function create(name: string) {
-    return undefined as Pipeline;
+    return undefined as unknown as Pipeline;
 }
 
 function fromID(_pipeline: Pipeline) {
-    return undefined as Pipeline;
+    return undefined as unknown as Pipeline;
 }

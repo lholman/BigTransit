@@ -11,15 +11,20 @@
       "paths": {
         "@bigtransit/core/*": ["packages/core/src/*"],
         "@bigtransit/tests/*": ["packages/core/test/*"],
-        "sst": ["./.sst/index.d.ts"]
-      },
-      "typeRoots": [
-        "./node_modules/@types"
-      ]
+        "*": [
+        "node_modules/*",
+        "types/*"
+        ]
+      }
     },
     "exclude": [
       "node_modules",
       "dist"
+    ],
+    "include": [
+      "src/**/*",
+      "types/**/*",
+      ".sst/**/*.d.ts"
     ]
     
   }

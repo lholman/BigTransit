@@ -44,7 +44,6 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::710285992829:role/GitHubActionsSSTdeploy
-          role-duration-seconds: 14390 #adjust as needed for your build time
           aws-region: eu-west-1             
       - name: Install NPM Dependencies
         run: npm install

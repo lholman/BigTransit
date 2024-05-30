@@ -53,8 +53,16 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::710285992829:role/GitHubActionsSSTdeploy
           aws-region: eu-west-2             
-      - name: Install NPM Dependencies
-        run: npm install
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: node_modules_and_sst
+          path: .
+      
+      - name: Extract artifact
+        run: tar -xzf artifacts.tar.gz
+
       - name: Install SST ION deployment CLI
         run: brew install sst/tap/sst
       - name: Check SST Version

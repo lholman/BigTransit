@@ -5,8 +5,8 @@ on:
     - main
 
 permissions:
-  id-token: write # This is required for requesting the JWT
-  contents: read # This is required for actions/checkout
+  id-token: write
+  contents: read
 
 jobs:
   Commit:
@@ -17,23 +17,31 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - uses: actions/checkout@v4          
-      - name: Install NPM Dependencies
+
+      - uses: actions/checkout@v4
+
+      - name: Install NPM dependencies
         run: npm install
+
       - name: Install SST ION deployment CLI
         run: brew install sst/tap/sst
-      - name: Check SST Version
+
+      - name: Check SST version
         run: sst version
+
       - name: Install SST AWS provider
-        run: sst install           
-      - name: Run TypeScript Build
+        run: sst install
+
+      - name: Run TypeScript build
         run: npm run build
+
       - name: Run Unit Tests
         run: npm run unit
         
       - name: Archive node_modules and .sst
         run: tar -czf artifacts.tar.gz node_modules .sst
-      - name: Upload artifact
+
+      - name: Upload Commit artifacts
         uses: actions/upload-artifact@v3
         with:
           name: node_modules_and_sst
@@ -48,27 +56,30 @@ jobs:
         with:
           node-version: '20.x'
       - uses: actions/checkout@v4
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::710285992829:role/GitHubActionsSSTdeploy
           aws-region: eu-west-2             
 
-      - name: Download artifact
+      - name: Download Commit artifacts
         uses: actions/download-artifact@v3
         with:
           name: node_modules_and_sst
           path: .
       
-      - name: Extract artifact
+      - name: Extract artifacts
         run: tar -xzf artifacts.tar.gz
 
       - name: Install SST ION deployment CLI
         run: brew install sst/tap/sst
-      - name: Check SST Version
-        run: sst version
-      - name: Install SST AWS provider
-        run: sst install        
-      - name: Deploy to AWS acceptance environment
-        run: sst deploy --stage production
 
+      - name: Check SST version
+        run: sst version
+
+      - name: Install SST AWS provider
+        run: sst install
+
+      - name: Deploy to AWS Acceptance environment
+        run: sst deploy --stage production

@@ -2,7 +2,7 @@ import { Team } from "@bigtransit/core/team";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 export async function getTeam() {
-  const team = Team.fromID(1);
+  const team = Team.fromID("1");
   return {
     headers: {
       'Content-Type': 'application/json',

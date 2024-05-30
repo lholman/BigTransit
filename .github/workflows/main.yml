@@ -3,6 +3,11 @@ on:
   push:
     branches:
     - main
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+
 jobs:
   Commit:
     name: Commit stage
@@ -34,7 +39,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - uses: actions/checkout@v4          
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::710285992829:role/GitHubActionsSSTdeploy
+          role-duration-seconds: 14390 #adjust as needed for your build time
+          aws-region: eu-west-1             
       - name: Install NPM Dependencies
         run: npm install
       - name: Install SST ION deployment CLI

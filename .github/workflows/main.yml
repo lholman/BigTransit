@@ -44,7 +44,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::710285992829:role/GitHubActionsSSTdeploy
-          aws-region: eu-west-1             
+          aws-region: eu-west-2             
       - name: Install NPM Dependencies
         run: npm install
       - name: Install SST ION deployment CLI

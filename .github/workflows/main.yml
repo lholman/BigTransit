@@ -19,6 +19,8 @@ jobs:
         run: brew install sst/tap/sst
       - name: Check SST Version
         run: sst version
+      - name: Install SST AWS provider
+        run: sst install           
       - name: Run TypeScript Build
         run: npm run build
       - name: Run Unit Tests

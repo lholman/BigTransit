@@ -12,8 +12,7 @@
         "@bigtransit/core/*": ["packages/core/src/*"],
         "@bigtransit/tests/*": ["packages/core/test/*"],
         "*": [
-        "node_modules/*",
-        "types/*"
+        "node_modules/*"
         ]
       }
     },

@@ -11,7 +11,7 @@
   "scripts": {
     "build": "npx tsc --noEmit",
     "unit": "vitest run core --coverage",
-    "acceptance": "sst dev vitest run functions"
+    "acceptance": "vitest run functions"
   },
   "keywords": [],
   "author": "",

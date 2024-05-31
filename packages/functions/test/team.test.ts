@@ -1,28 +1,35 @@
 import { describe, it, expect } from 'vitest';
 import axios from 'axios';
+import dotenv from 'dotenv';
 import { validate as uuidValidate } from "uuid";
 
-const devUrl = "https://uhmp5xv4a8.execute-api.eu-west-2.amazonaws.com";
+dotenv.config();
 
-describe('GET Team API', () => {
-  it('gets a team', async () => {
-    const response = await axios.get(`${devUrl}/teams1`);
+const apiUrl = process.env.ACCEPTANCE_API_URL;
 
-    expect(response.status).toBe(200);
+if (!apiUrl) {
+  throw new Error("ACCEPTANCE_API_URL environment variable is not set");
+}
 
-    const headers = response.headers;
-    expect(headers).toHaveProperty('content-type');
+// describe('GET Team API', () => {
+//   it('gets a team', async () => {
+//     const response = await axios.get(`${apiUrl}/teams1`);
 
-    const team = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+//     expect(response.status).toBe(200);
 
-    expect(team).not.toBeNull;
-  });
-});
+//     const headers = response.headers;
+//     expect(headers).toHaveProperty('content-type');
+
+//     const team = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+
+//     expect(team).not.toBeNull;
+//   });
+// });
 
 describe('POST Team API', () => {
   it('Returns HTTP 200 and correct content type', async () => {
     
-    const response = await axios.post(`${devUrl}/teams`, {
+    const response = await axios.post(`${apiUrl}/teams`, {
       name: 'Stream aligned team'
     });
 

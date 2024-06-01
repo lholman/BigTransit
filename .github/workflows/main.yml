@@ -86,10 +86,6 @@ jobs:
 
       - name: Deploy to AWS Acceptance environment
         run: node scripts/deploy-acceptance.js
-        env:
-          DEPLOY_OUTPUT: ${{ steps.deploy.outputs.stdout }}
 
       - name: Run Functional Acceptance Tests
-        env:
-          ACCEPTANCE_API_URL: ${{ steps.extract_api_url.outputs.acceptance-api-url }}
         run: npm run acceptance

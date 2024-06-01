@@ -89,3 +89,7 @@ jobs:
 
       - name: Run Functional Acceptance Tests
         run: npm run acceptance
+
+      - name: Tear down and remove AWS Acceptance environment
+        if: success()
+        run: sst remove --stage acceptance

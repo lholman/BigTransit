@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { validate as uuidValidate } from "uuid";
@@ -11,20 +11,36 @@ if (!apiUrl) {
   throw new Error("ACCEPTANCE_API_URL environment variable is not set");
 }
 
-// describe('GET Team API', () => {
-//   it('gets a team', async () => {
-//     const response = await axios.get(`${apiUrl}/teams1`);
+async function createTeam(name: string) {
+  const response = await axios.post(`${apiUrl}/teams`, { name });
+  return response.data;
+}
 
-//     expect(response.status).toBe(200);
+describe('Team API Acceptance Tests', () => {
+  let createdTeam: { teamID: string, name: string };
 
-//     const headers = response.headers;
-//     expect(headers).toHaveProperty('content-type');
+  beforeAll(async () => {
+    createdTeam = await createTeam('Initial Test Team');
+  });
 
-//     const team = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+  afterAll(async () => {
+    // await axios.delete(`${apiUrl}/teams/${createdTeam.teamID}`);
+  });
 
-//     expect(team).not.toBeNull;
-//   });
-// });
+  describe('GET Team API', () => {
+    // it('gets a team', async () => {
+    //   const response = await axios.get(`${apiUrl}/teams1`);
+
+    //   expect(response.status).toBe(200);
+
+    //   const headers = response.headers;
+    //   expect(headers).toHaveProperty('content-type');
+
+    //   const team = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+
+    //   expect(team).not.toBeNull;
+    // });
+  });
 
 describe('POST Team API', () => {
   it('Returns HTTP 200 and correct content type', async () => {
@@ -38,4 +54,5 @@ describe('POST Team API', () => {
     expect(headers).toHaveProperty('content-type');
 
   });
+});
 });

@@ -13,7 +13,7 @@ if (!apiUrl) {
 }
 
 if (process.env.GITHUB_ACTIONS) {
-  console.log(`echo "ACCEPTANCE_API_URL=${apiUrl}" >> "$GITHUB_ENV"`);
+  fs.appendFileSync(process.env.GITHUB_ENV, `ACCEPTANCE_API_URL=${apiUrl}\n`);
   console.log(`API URL for acceptance environment set to ${apiUrl} in GitHub Actions environment`);
 } else {
   fs.writeFileSync('.env', `ACCEPTANCE_API_URL=${apiUrl}`);

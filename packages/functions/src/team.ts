@@ -1,5 +1,5 @@
 import { Team } from "../../core/src/Team/team";
-import { newTeamWithName, getTeamById } from "../../core/src/Team/team.dal";
+import { newTeamWithName, getTeamById } from "../../core/src/Team/team";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 export async function getTeam(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {

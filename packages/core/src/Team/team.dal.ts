@@ -3,22 +3,27 @@ import { Resource as DefaultResource } from "sst";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { PutCommand, GetCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuidv4 } from 'uuid';
-import { Item, mapToTeam, mapToItem } from "./team.mapper";
-import { Team } from "./team";
 
 const client = new DynamoDBClient({});
 const ddbDocClient = DynamoDBDocumentClient.from(client);
 
-export async function newTeamWithName(_name: string, resource = DefaultResource): Promise<Team> {
+export interface Item {
+    PK: string;
+    SK: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+
+export async function dalNewTeamWithName(_name: string, resource = DefaultResource): Promise<Item> {
     
-    const team: Team = {
-        id: uuidv4(),
+    const item: Item = {
+        PK: `TEAM#${uuidv4()}`,
+        SK: "INFO",
         name: _name,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
     };
-
-    const item = mapToItem(team);
 
     const params = {
         TableName: resource.BigTransit.name,
@@ -26,10 +31,10 @@ export async function newTeamWithName(_name: string, resource = DefaultResource)
     };
 
     await ddbDocClient.send(new PutCommand(params));
-    return team;
+    return item;
 }
 
-export async function getTeamById(id: string, resource = DefaultResource): Promise<Team | null> {
+export async function dalGetTeamById(id: string, resource = DefaultResource): Promise<Item | null> {
     
     const params = {
         TableName: resource.BigTransit.name,
@@ -41,7 +46,7 @@ export async function getTeamById(id: string, resource = DefaultResource): Promi
 
     try {
         const result = await ddbDocClient.send(new GetCommand(params));
-        return result.Item ? mapToTeam(result.Item as Item) : null;
+        return result.Item ? result.Item as Item : null;
     } catch (error) {
         console.error('Error retrieving team:', error);
         throw error;

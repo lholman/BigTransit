@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { newTeamWithName, getTeamById } from "../src/Team/team.dal";
+import { dalNewTeamWithName, dalGetTeamById } from "../src/Team/team.dal";
 import { validate as uuidValidate } from "uuid";
 import type { ResourceMock } from "@bigtransit/tests/types/ResourceMocks";
 
@@ -27,16 +27,21 @@ describe('Team data access layer', function() {
     };
   });
 
-  it("should create a new team with a given name", async () => {
+  it("should create a new team with correct DynamoDB table structure", async () => {
     ddbMock.on(PutCommand).resolves({});
     
     const name = "Stream aligned team";
-    const team = await newTeamWithName(name, resourceMock);
+    const item = await dalNewTeamWithName(name, resourceMock);
     
-    expect(team).toHaveProperty('id');
-    expect(team.name).toBe(name);
-    expect(team).toHaveProperty('createdAt');
-    expect(team).toHaveProperty('updatedAt');
+    expect(item).toHaveProperty('PK');
+    expect(item).toHaveProperty('SK');
+    expect(item).toHaveProperty('name');
+    expect(item).toHaveProperty('createdAt');
+    expect(item).toHaveProperty('updatedAt');
+
+    expect(item.PK).toContain('TEAM#');
+    expect(item.SK).toBe('INFO');
+    expect(item.name).toBe(name);
     
     const calls = ddbMock.commandCalls(PutCommand);
     expect(calls).toHaveLength(1);
@@ -45,7 +50,7 @@ describe('Team data access layer', function() {
   it("should handle DynamoDB PutCommand error gracefully", async () => {
     ddbMock.on(PutCommand).rejects(new Error("DynamoDB error"));
 
-    await expect(newTeamWithName("Stream aligned team", resourceMock)).rejects.toThrow("DynamoDB error");
+    await expect(dalNewTeamWithName("Stream aligned team", resourceMock)).rejects.toThrow("DynamoDB error");
     
     const calls = ddbMock.commandCalls(PutCommand);
     expect(calls).toHaveLength(1);
@@ -56,7 +61,7 @@ describe('Team data access layer', function() {
       Item: { PK: "f25e22a1-1924-4c87-bb7f-46b6d087d80f", name: "Stream aligned team" },
     });
 
-    const team = await getTeamById("f25e22a1-1924-4c87-bb7f-46b6d087d80f", resourceMock);
+    const team = await dalGetTeamById("f25e22a1-1924-4c87-bb7f-46b6d087d80f", resourceMock);
 
     expect(team?.name).toBe("Stream aligned team");
 
@@ -74,12 +79,12 @@ describe('Team data access layer', function() {
       Item: { PK: teamId, name: "Stream aligned team" },
     });
 
-    const team = await getTeamById(teamId, resourceMock);
+    const item = await dalGetTeamById(teamId, resourceMock);
 
-    expect(team).not.toBeNull();
-    if (team) {
-      expect(uuidValidate(team.id)).toBe(true);
-      expect(team.id).toBe(teamId);
+    expect(item).not.toBeNull();
+    if (item) {
+      //expect(item.PK).toBe(`TEAM#${teamId}`,);
+      expect(item.PK).toBe(`${teamId}`,);
     }
 
     const calls = ddbMock.commandCalls(GetCommand);
@@ -91,7 +96,7 @@ describe('Team data access layer', function() {
       Item: null as unknown as Record<string, any> | undefined,
     });
 
-    const team = await getTeamById("non-existing-id", resourceMock);
+    const team = await dalGetTeamById("non-existing-id", resourceMock);
     expect(team).toBeNull();
 
     const calls = ddbMock.commandCalls(GetCommand);
@@ -101,10 +106,9 @@ describe('Team data access layer', function() {
   it("should handle DynamoDB GetCommand error gracefully", async () => {
     ddbMock.on(GetCommand).rejects(new Error("DynamoDB error"));
 
-    await expect(getTeamById("f25e22a1-1924-4c87-bb7f-46b6d087d80f", resourceMock)).rejects.toThrow("DynamoDB error");
+    await expect(dalGetTeamById("f25e22a1-1924-4c87-bb7f-46b6d087d80f", resourceMock)).rejects.toThrow("DynamoDB error");
 
     const calls = ddbMock.commandCalls(GetCommand);
     expect(calls).toHaveLength(1);
   });
-
 });

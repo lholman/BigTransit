@@ -1,17 +1,10 @@
 import { Team } from "./team";
-
-export interface Item {
-  PK: string;
-  SK: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Item } from "../Team/team.dal";
 
 export function mapToItem(team: Team): Item {
   return {
     PK: `TEAM#${team.id}`,
-    SK: 'INFO',
+    SK: "INFO",
     name: team.name,
     createdAt: team.createdAt,
     updatedAt: team.updatedAt

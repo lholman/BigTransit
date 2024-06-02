@@ -27,6 +27,8 @@ describe('Team service layer', function() {
           const team = await newTeamWithName(name);
 
           expect(team.id).toBe(mockTeam.id);
+          expect(team.name).toBe(mockTeam.name);
+          expect(newTeamWithName).toHaveBeenCalledWith(name);
         });
 
     });

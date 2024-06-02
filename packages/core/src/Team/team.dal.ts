@@ -13,12 +13,16 @@ export interface Item {
     name: string;
     createdAt: string;
     updatedAt: string;
-  }
+}
+
+export function generatePK(): string {
+    return `TEAM#${uuidv4()}`;
+}
 
 export async function dalNewTeamWithName(_name: string, resource = DefaultResource): Promise<Item> {
     
     const item: Item = {
-        PK: `TEAM#${uuidv4()}`,
+        PK: generatePK(),
         SK: "INFO",
         name: _name,
         createdAt: new Date().toISOString(),

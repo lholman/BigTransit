@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { dalNewTeamWithName, dalGetTeamById } from "../src/Team/team.dal";
+import { dalNewTeamWithName, dalGetTeamById, generatePK } from "../src/Team/team.dal";
 import { validate as uuidValidate } from "uuid";
 import type { ResourceMock } from "@bigtransit/tests/types/ResourceMocks";
 
@@ -83,7 +83,6 @@ describe('Team data access layer', function() {
 
     expect(item).not.toBeNull();
     if (item) {
-      //expect(item.PK).toBe(`TEAM#${teamId}`,);
       expect(item.PK).toBe(`${teamId}`,);
     }
 
@@ -110,5 +109,14 @@ describe('Team data access layer', function() {
 
     const calls = ddbMock.commandCalls(GetCommand);
     expect(calls).toHaveLength(1);
+  });
+
+  it('should generate a PK with TEAM# prefix', () => {
+      vi.mock('uuid', () => ({
+        v4: () => 'mock-uuid'
+      }));
+  
+      const pk = generatePK();
+      expect(pk).toBe('TEAM#mock-uuid');
   });
 });

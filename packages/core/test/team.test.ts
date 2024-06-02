@@ -28,7 +28,5 @@ describe('Team service layer', function() {
           expect(team.name).toBe(mockTeam.name);
           expect(newTeamWithName).toHaveBeenCalledWith(name);
         });
-
     });
-
 });

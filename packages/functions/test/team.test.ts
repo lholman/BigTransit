@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { validate as uuidValidate } from "uuid";
 
 dotenv.config();
 
@@ -12,47 +11,65 @@ if (!apiUrl) {
 }
 
 async function createTeam(name: string) {
-  const response = await axios.post(`${apiUrl}/teams`, { name });
-  return response.data;
+  try {
+    const response = await axios.post(`${apiUrl}/teams`, { name });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating team:', error);
+    throw error;
+  }
 }
 
 describe('Team API Acceptance Tests', () => {
-  let createdTeam: { teamID: string, name: string };
+  let createdTeam: { id: string, name: string };
 
   beforeAll(async () => {
-    createdTeam = await createTeam('Initial Test Team');
+    try {
+      createdTeam = await createTeam('Initial Test Team');
+      console.log(`createdTeam ${createdTeam}`);
+    } catch (error) {
+      console.error('Error in beforeAll:', error);
+      throw error;
+    }
   });
 
   afterAll(async () => {
-    // await axios.delete(`${apiUrl}/teams/${createdTeam.teamID}`);
+    // await axios.delete(`${apiUrl}/teams/${createdTeam.id}`);
   });
 
-  describe('GET Team API', () => {
-    // it('gets a team', async () => {
-    //   const response = await axios.get(`${apiUrl}/teams1`);
+  describe('GET /teams/{id}', () => {
+    it('should return 200 and the correct team data', async () => {
+      try {
+        console.log(`Team ID: ${createdTeam.id}`);
+        const response = await axios.get(`${apiUrl}/teams/${createdTeam.id}`);
+        expect(response.status).toBe(200);
 
-    //   expect(response.status).toBe(200);
+        const headers = response.headers;
+        expect(headers).toHaveProperty('content-type');
 
-    //   const headers = response.headers;
-    //   expect(headers).toHaveProperty('content-type');
+        const team = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
 
-    //   const team = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
-
-    //   expect(team).not.toBeNull;
-    // });
-  });
-
-describe('POST Team API', () => {
-  it('Returns HTTP 200 and correct content type', async () => {
-    
-    const response = await axios.post(`${apiUrl}/teams`, {
-      name: 'Stream aligned team'
+        expect(team).not.toBeNull();
+        expect(team.id).toBe(createdTeam.id);
+        expect(team.name).toBe(createdTeam.name);
+      } catch (error) {
+        console.error('Error in GET /teams/{id} test:', error);
+        throw error;
+      }
     });
-
-    expect(response.status).toBe(200);
-    const headers = response.headers;
-    expect(headers).toHaveProperty('content-type');
-
   });
-});
+
+  // describe('POST Team API', () => {
+  //   it('Returns HTTP 200 and correct content type', async () => {
+      
+  //     const response = await axios.post(`${apiUrl}/teams`, {
+  //       name: 'Stream aligned team'
+  //     });
+
+  //     expect(response.status).toBe(200);
+  //     const headers = response.headers;
+  //     expect(headers).toHaveProperty('content-type');
+
+  //   });
+  // });
 });

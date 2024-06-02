@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { dalNewTeamWithName, dalGetTeamById, generatePK } from "../src/Team/team.dal";
-import { validate as uuidValidate } from "uuid";
 import type { ResourceMock } from "@bigtransit/tests/types/ResourceMocks";
+import { validate as uuidValidate } from 'uuid';
 
 const ddbMock = mockClient(DynamoDBDocumentClient);
 
@@ -95,7 +95,7 @@ describe('Team data access layer', function() {
       Item: null as unknown as Record<string, any> | undefined,
     });
 
-    const team = await dalGetTeamById("non-existing-id", resourceMock);
+    const team = await dalGetTeamById("f25e22a1-1924-4c87-bb7f-46b6d087d80f", resourceMock);
     expect(team).toBeNull();
 
     const calls = ddbMock.commandCalls(GetCommand);
@@ -111,12 +111,18 @@ describe('Team data access layer', function() {
     expect(calls).toHaveLength(1);
   });
 
-  it('should generate a PK with TEAM# prefix', () => {
-      vi.mock('uuid', () => ({
-        v4: () => 'mock-uuid'
-      }));
+  it('should generate PK as a new UUID with TEAM# prefix', () => {
+    const pk = generatePK();
+    expect(pk.split('#')[0]).toBe('TEAM');
+    expect(uuidValidate(pk.split('#')[1])).toBe(true);
+  });
+
+  it('should return a UUID with TEAM# prefix', () => {
+    const pk = generatePK("f25e22a1-1924-4c87-bb7f-46b6d087d80f");
+    expect(pk).toBe('TEAM#f25e22a1-1924-4c87-bb7f-46b6d087d80f');
+  });
   
-      const pk = generatePK();
-      expect(pk).toBe('TEAM#mock-uuid');
+  it('should return an error if id is not a valid UUID v4', () => {
+    expect(() => generatePK("mock-uuid")).toThrowError("id must be a valid 36-character UUID v4 string");
   });
 });

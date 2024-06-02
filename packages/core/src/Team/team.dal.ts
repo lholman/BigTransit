@@ -2,7 +2,7 @@ export * as Team from "./team.dal"
 import { Resource as DefaultResource } from "sst";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { PutCommand, GetCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 const client = new DynamoDBClient({});
 const ddbDocClient = DynamoDBDocumentClient.from(client);
@@ -15,8 +15,18 @@ export interface Item {
     updatedAt: string;
 }
 
-export function generatePK(): string {
-    return `TEAM#${uuidv4()}`;
+export function generatePK(id?: string): string {    
+    let pk;
+    if (!id) {
+        return pk = `TEAM#${uuidv4()}`;
+    }
+    if (!uuidValidate(id)){
+        const errorMsg = "id must be a valid 36-character UUID v4 string";
+        console.error(errorMsg);
+        throw new Error(errorMsg);
+    }
+
+    return pk = `TEAM#${id}`;
 }
 
 export async function dalNewTeamWithName(_name: string, resource = DefaultResource): Promise<Item> {
@@ -43,7 +53,7 @@ export async function dalGetTeamById(id: string, resource = DefaultResource): Pr
     const params = {
         TableName: resource.BigTransit.name,
         Key: {
-            PK: `TEAM#${id}`,
+            PK: generatePK(id),
             SK: 'INFO'
         }
     };

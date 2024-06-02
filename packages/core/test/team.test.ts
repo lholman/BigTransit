@@ -21,9 +21,7 @@ vi.mock("../src/Team/team", () => ({
 describe('Team service layer', function() {
     describe('newTeam', () => {
         it('should create a new team with a valid name', async () => {
-                   
           const name = 'Stream aligned team';
-
           const team = await newTeamWithName(name);
 
           expect(team.id).toBe(mockTeam.id);

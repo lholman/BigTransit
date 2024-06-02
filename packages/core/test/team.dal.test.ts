@@ -123,6 +123,6 @@ describe('Team data access layer', function() {
   });
   
   it('should return an error if id is not a valid UUID v4', () => {
-    expect(() => generatePK("mock-uuid")).toThrowError("id must be a valid 36-character UUID v4 string");
+    expect(() => generatePK("invalid-uuid")).toThrowError("id must be a valid 36-character UUID v4 string");
   });
 });

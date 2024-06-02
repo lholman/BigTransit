@@ -2,8 +2,6 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { newTeamWithName, getTeamById } from "../src/Team/team.dal";
-import { Item, mapToItem, mapToTeam } from "../src/Team/team.mapper";
-import { Team } from "../src/Team/team";
 import { validate as uuidValidate } from "uuid";
 import type { ResourceMock } from "@bigtransit/tests/types/ResourceMocks";
 

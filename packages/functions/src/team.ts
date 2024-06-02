@@ -1,4 +1,5 @@
-import { Team, newTeamWithName, fromID } from "@bigtransit/core/team";
+import { Team } from "../../core/src/Team/team";
+import { newTeamWithName, getTeamById } from "../../core/src/Team/team.dal";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 export async function getTeam(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
@@ -12,7 +13,7 @@ export async function getTeam(event: APIGatewayProxyEvent): Promise<APIGatewayPr
   }
 
   try {
-    const team = await fromID(teamID);
+    const team = await getTeamById(teamID);
     if (!team) {
       return {
         statusCode: 404,

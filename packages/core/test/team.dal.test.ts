@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { dalNewTeamWithName, dalGetTeamById, generatePK } from "../src/Team/team.dal";

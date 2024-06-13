@@ -1,4 +1,4 @@
-import { dalNewTeamWithName, dalGetTeamById } from "./team.dal";
+import * as DefaultDataAccessLayer from"./team.dal";
 import {mapToTeam } from "./team.mapper";
 
 export interface Team {
@@ -8,16 +8,19 @@ export interface Team {
     updatedAt: string;
   }
 
-export async function newTeamWithName(name: string): Promise<Team> {
-  const team = mapToTeam(await dalNewTeamWithName(name));
+export async function newTeamWithName(name: string, dal = DefaultDataAccessLayer): Promise<Team> {
+  const team = mapToTeam(await dal.dalNewTeamWithName(name));
   return team;
 }
 
-export async function getTeamById(id: string): Promise<Team | null> {
-  const item = await dalGetTeamById(id);
+export async function getTeamById(id: string, dal = DefaultDataAccessLayer): Promise<Team | null> {
+  const item = await dal.dalGetTeamById(id);
   if (!item) {
     return null;
   }
   const team = mapToTeam(item);
+  if(team.id != id) {
+    return null;
+  }
   return team;
 }

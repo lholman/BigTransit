@@ -13,7 +13,8 @@
         "@bigtransit/tests/*": ["packages/core/test/*"],
         "*": [
         "node_modules/*"
-        ]
+        ],
+        "types": ["vitest/globals"]
       }
     },
     "exclude": [

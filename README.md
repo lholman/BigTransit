@@ -8,6 +8,15 @@ An AWS Serverless backend and API Gateway providing a consistent approach to vis
 Big Transit provides an API abstraction over common CI/CD tooling, starting with implementations for AWS CodePipeline and Github Actions. It is intended to provide a consistent, versioned backend API for teams to build light weight frontends to visualise how effectively their Continuous Delivery Pipelines and day-to-day activities are helping them demonstrate true Continuous Integration and Continuous Delivery practices.  
 
 ## 💻 Requirements
+### Architecture Decision Records
+This project records its main architectural decisions as ADRs, please take a moment to read these within docs/adr as they explain the context, decision and consequences of the major decisions. 
+Big Transit uses the awesomely simple [ADR Tools](https://github.com/npryce/adr-tools/blob/master/INSTALL.md) for writing and maintaining these ADR files. Install ADR Tools using brew
+
+```
+brew install adr-tools
+adr list
+```
+
 ### Node.js
 Big Transit requires Node.js version 20.9.9 or higher. The goal is always to be running Node major version -1 at the oldest.
 Install Node.js from the official website: https://nodejs.org/

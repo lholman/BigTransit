@@ -1,4 +1,3 @@
-//export * as Team from "./team.dal"
 import { Resource as DefaultResource } from "sst";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { PutCommand, GetCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";

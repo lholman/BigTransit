@@ -40,11 +40,19 @@ export async function getTeam(event: APIGatewayProxyEvent): Promise<APIGatewayPr
 export async function newTeam(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   try {
     const requestBody = JSON.parse(event.body || '{}');
-    const _name = requestBody.name;
+    const name = requestBody.name;
 
-    console.log("_name:", _name);
+    if (!name || typeof name !== 'string' || name.trim() === '') {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: 'Name is required and must be a non-empty string' }),
+      };
+    }
 
-    const team = await newTeamWithName(_name);
+    const team = await newTeamWithName(name);
 
     return {
       statusCode: 201,
@@ -54,7 +62,7 @@ export async function newTeam(event: APIGatewayProxyEvent): Promise<APIGatewayPr
       body: JSON.stringify(team),
     };
   } catch (error) {
-    console.error(error);
+    console.error('Error creating new team:', error);
 
     return {
       statusCode: 500,

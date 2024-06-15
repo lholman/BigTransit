@@ -72,5 +72,17 @@ describe('Team API Acceptance Tests', () => {
       expect(team).toHaveProperty('createdAt');
       expect(team).toHaveProperty('updatedAt');
     });
+    it('should fail to create a new team with an invalid name', async () => {
+      try {
+        await axios.post(`${apiUrl}/teams`, { name: '' });
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          expect(error.response?.status).toBe(400);
+          expect(error.response?.data).toHaveProperty('message', 'Name is required and must be a non-empty string');
+        } else {
+          throw error;
+        }
+      }
+    });
   });  
 });

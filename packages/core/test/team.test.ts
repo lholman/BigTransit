@@ -1,6 +1,5 @@
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 import { newTeamWithName, getTeamById, Team } from "../src/Team/team";
-//import { Item} from "../src/Team/team.dal";
 import * as MockedDataAccessLayer from "../test/types/DataAccessLayerMocks";
 
 const mockTeam: Team = {

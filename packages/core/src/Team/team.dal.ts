@@ -70,7 +70,7 @@ export async function dalGetTeamById(id: string, resource = DefaultResource): Pr
     }
 }
 
-export async function dalDeleteTeamById(id: string, resource = DefaultResource): Promise<void> {
+export async function dalDeleteTeamById(id: string, resource = DefaultResource): Promise<Boolean> {
     const params = {
         TableName: resource.BigTransit.name,
         Key: {
@@ -81,6 +81,7 @@ export async function dalDeleteTeamById(id: string, resource = DefaultResource):
 
     try {
         await ddbDocClient.send(new DeleteCommand(params));
+        return true;
     } catch (error: any) {
         if (error.name === 'ConditionalCheckFailedException') {
             throw new Error(`Team with ID ${id} not found`);

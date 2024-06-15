@@ -19,6 +19,7 @@ export const dalGetTeamById: TeamDataAccessLayerInterface['dalGetTeamById'] = as
 };
 
 export const dalDeleteTeamById: TeamDataAccessLayerInterface['dalDeleteTeamById'] = async (id: string, resource?: DefaultResource) => {
+  return true;
 };
 
 export const generatePK: TeamDataAccessLayerInterface['generatePK'] = (id?: string) => {

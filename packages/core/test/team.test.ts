@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
-import { newTeamWithName, getTeamById, Team } from "../src/Team/team";
+import { deleteTeamById, newTeamWithName, getTeamById, Team } from "../src/Team/team";
 import * as MockedDataAccessLayer from "../test/types/DataAccessLayerMocks";
 
 const mockTeam: Team = {
@@ -45,4 +45,34 @@ describe('Team service layer', function() {
             expect(team).toBeNull();
         });
     });
+
+    describe('deleteTeamById', () => {
+        it('should delete an existing team successfully', async () => {
+            vi.spyOn(MockedDataAccessLayer, 'dalDeleteTeamById').mockResolvedValue(true);
+            const result = await deleteTeamById('test-id', MockedDataAccessLayer);
+
+            expect(result).toBeTruthy();
+            expect(MockedDataAccessLayer.dalDeleteTeamById).toHaveBeenCalledWith('test-id');
+        });
+
+        it('should return false if deletion fails', async () => {
+            vi.spyOn(MockedDataAccessLayer, 'dalDeleteTeamById').mockRejectedValue(new Error('Failed to delete team'));
+
+            const result = await deleteTeamById('test-id', MockedDataAccessLayer);
+            expect(result).toBe(false);
+
+            expect(MockedDataAccessLayer.dalDeleteTeamById).toHaveBeenCalledWith('test-id');
+        });
+
+        it('should throw an error if team not found', async () => {
+            vi.spyOn(MockedDataAccessLayer, 'dalGetTeamById').mockResolvedValue(null);
+            vi.spyOn(MockedDataAccessLayer, 'dalDeleteTeamById').mockResolvedValue(false);
+
+            await expect(deleteTeamById('non-existent-id', MockedDataAccessLayer)).rejects.toThrow('Team not found');
+
+            expect(MockedDataAccessLayer.dalGetTeamById).toHaveBeenCalledWith('non-existent-id');
+            expect(MockedDataAccessLayer.dalDeleteTeamById).not.toHaveBeenCalled();
+        });
+     });
+    
   });    

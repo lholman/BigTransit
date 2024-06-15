@@ -24,3 +24,20 @@ export async function getTeamById(id: string, dal = DefaultDataAccessLayer): Pro
   }
   return team;
 }
+
+export async function deleteTeamById(id: string, dal = DefaultDataAccessLayer): Promise<Boolean> {
+  const item = await dal.dalGetTeamById(id);
+  if (!item) {
+    throw new Error('Team not found');
+  }
+  try {
+    const result = await dal.dalDeleteTeamById(id);
+    if (result){
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(`Failed to delete team with ID ${id}:`, error);
+    return false;
+  }
+}

@@ -27,7 +27,7 @@ jobs:
         run: node scripts/check-audit.js    
 
       - name: Install SST ION deployment CLI
-        run: brew install sst/tap/sst
+        run: curl -fsSL https://ion.sst.dev/install | bash
 
       - name: Check SST version
         run: sst version

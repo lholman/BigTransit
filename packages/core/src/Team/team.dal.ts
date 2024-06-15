@@ -1,6 +1,6 @@
 import { Resource as DefaultResource } from "sst";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { PutCommand, GetCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { DeleteCommand, PutCommand, GetCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 const client = new DynamoDBClient({});
@@ -66,6 +66,23 @@ export async function dalGetTeamById(id: string, resource = DefaultResource): Pr
         return result.Item ? (result.Item as Item) : null;
     } catch (error) {
         console.error('Error retrieving team:', error);
+        throw error;
+    }
+}
+
+export async function dalDeleteTeamById(id: string, resource = DefaultResource): Promise<void> {
+    const params = {
+        TableName: resource.BigTransit.name,
+        Key: {
+            PK: generatePK(id),
+            SK: 'INFO'
+        }
+    };
+
+    try {
+        await ddbDocClient.send(new DeleteCommand(params));
+    } catch (error) {
+        console.error('Error deleting team:', error);
         throw error;
     }
 }

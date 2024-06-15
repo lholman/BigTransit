@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
-import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { dalNewTeamWithName, dalGetTeamById, generatePK } from "../src/Team/team.dal";
+import { DeleteCommand, GetCommand, PutCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { dalDeleteTeamById, dalNewTeamWithName, dalGetTeamById, generatePK } from "../src/Team/team.dal";
 import type { ResourceMock } from "@bigtransit/tests/types/ResourceMocks";
 import { validate as uuidValidate } from 'uuid';
 
@@ -124,5 +124,14 @@ describe('Team data access layer', function() {
   
   it('should return an error if id is not a valid UUID v4', () => {
     expect(() => generatePK("invalid-uuid")).toThrowError("id must be a valid 36-character UUID v4 string");
+  });
+
+  it('should delete a team by ID', async () => {
+    ddbMock.on(DeleteCommand).resolves({});
+
+    await dalDeleteTeamById('f25e22a1-1924-4c87-bb7f-46b6d087d80f', resourceMock);
+
+    const calls = ddbMock.commandCalls(DeleteCommand);
+    expect(calls).toHaveLength(1);
   });
 });

@@ -32,6 +32,12 @@ jobs:
       - name: Check SST version
         run: sst version
 
+      - name: Force SST ION CLI to version 0.0.423
+        run: sst upgrade 0.0.423
+
+      - name: Check SST version
+        run: sst version
+
       - name: Install SST AWS provider
         run: sst install
 
@@ -77,6 +83,12 @@ jobs:
 
       - name: Install SST ION deployment CLI
         run: brew install sst/tap/sst
+
+      - name: Check SST version
+        run: sst version
+
+      - name: Force SST ION CLI to version 0.0.423
+        run: sst upgrade 0.0.423
 
       - name: Check SST version
         run: sst version

@@ -47,7 +47,7 @@ export async function newTeam(event: APIGatewayProxyEvent): Promise<APIGatewayPr
     const team = await newTeamWithName(_name);
 
     return {
-      statusCode: 200,
+      statusCode: 201,
       headers: {
         'Content-Type': 'application/json',
       },

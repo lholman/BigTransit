@@ -7,6 +7,10 @@ declare module "sst" {
       name: string
       type: "sst.aws.Dynamo"
     }
+    BigTransitApi: {
+      type: "sst.aws.ApiGatewayV2"
+      url: string
+    }
   }
 }
 export {}

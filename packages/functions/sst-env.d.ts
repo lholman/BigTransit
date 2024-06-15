@@ -1,12 +1,3 @@
 /* tslint:disable */
 /* eslint-disable */
-import "sst"
-declare module "sst" {
-  export interface Resource {
-    BigTransit: {
-      name: string
-      type: "sst.aws.Dynamo"
-    }
-  }
-}
-export {}
+/// <reference path="../../sst-env.d.ts" />

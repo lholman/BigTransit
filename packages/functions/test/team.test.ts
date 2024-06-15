@@ -59,17 +59,18 @@ describe('Team API Acceptance Tests', () => {
     });
   });
 
-  // describe('POST Team API', () => {
-  //   it('Returns HTTP 200 and correct content type', async () => {
+  describe('POST /teams', () => {
+    it('should create a new team with a valid name', async () => {
+      const name = 'New Test Team';
+      const response = await axios.post(`${apiUrl}/teams`, { name });
+  
+      expect(response.status).toBe(201);
+      const team = response.data;
       
-  //     const response = await axios.post(`${apiUrl}/teams`, {
-  //       name: 'Stream aligned team'
-  //     });
-
-  //     expect(response.status).toBe(200);
-  //     const headers = response.headers;
-  //     expect(headers).toHaveProperty('content-type');
-
-  //   });
-  // });
+      expect(team).toHaveProperty('id');
+      expect(team.name).toBe(name);
+      expect(team).toHaveProperty('createdAt');
+      expect(team).toHaveProperty('updatedAt');
+    });
+  });  
 });

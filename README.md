@@ -48,6 +48,18 @@ sst dev
 
 This will start Big Transit using SST Live. Live is a feature of SST that lets you test changes made to your functions in milliseconds. Your changes work without having to redeploy. And they can be invoked remotely. [Find out more about Live here](https://ion.sst.dev/docs/live/)
 
+## 🗂️ Repo structure
+Big Transit is a mono-repo, consisting of infrastructure, API, domain and data access layer. See [docs/adr/0002-use-monorepo-for-backend-and-infrastructure.md](docs/adr/0002-use-monorepo-for-backend-and-infrastructure.md)
+
+### Infrastructure is defined using SST from `/infra/app.js`
+
+```
+└── infra/
+    ├── api.ts      // AWS Api Gateway and URL path configuration
+    ├── database.ts // AWS DynamoDB single-table configuration See [docs/adr/0005-use-dynamodb-single-table-design-for-data-storage.md](docs/adr/0005-use-dynamodb-single-table-design-for-data-storage.md) 
+    ├── index.ts    // SST exports for api and database
+```
+
 ## 👩‍💻 Testing 
 Big Transit uses Vitest for unit testing domain code implementation, i.e. the business logic within the `packages/core/src` folders for each domain. To run tests use the handy npm alias.
 

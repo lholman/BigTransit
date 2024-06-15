@@ -1,4 +1,6 @@
 import { Item} from "../../src/Team/team.dal";
+import { TeamDataAccessLayerInterface } from "../../src/Team/team.dal.interface";
+import { Resource as DefaultResource } from "sst";
 
 const mockItem: Item = {
   PK: 'TEAM#test-id',
@@ -8,22 +10,17 @@ const mockItem: Item = {
   updatedAt: new Date().toISOString()
 };
 
-export async function dalNewTeamWithName()
-{
+export const dalNewTeamWithName: TeamDataAccessLayerInterface['dalNewTeamWithName'] = async (name: string, resource?: DefaultResource) => {
   return mockItem;
-}
+};
 
-export async function dalGetTeamById()
-{
+export const dalGetTeamById: TeamDataAccessLayerInterface['dalGetTeamById'] = async (id: string, resource?: DefaultResource) => {
   return mockItem;
-}
+};
 
-export async function dalDeleteTeamById()
-{
-  return null;
-}
+export const dalDeleteTeamById: TeamDataAccessLayerInterface['dalDeleteTeamById'] = async (id: string, resource?: DefaultResource) => {
+};
 
-export function generatePK()
-{
+export const generatePK: TeamDataAccessLayerInterface['generatePK'] = (id?: string) => {
   return mockItem.PK;
-}
+};

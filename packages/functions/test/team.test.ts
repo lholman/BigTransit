@@ -57,6 +57,20 @@ describe('Team API Acceptance Tests', () => {
         throw error;
       }
     });
+    it('should return 404 for a non-existent team ID', async () => {
+      const nonExistentTeamId = 'non-existent-id';
+      try {
+        await axios.get(`${apiUrl}/teams/${nonExistentTeamId}`);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          expect(error.response?.status).toBe(404);
+          expect(error.response?.data).toHaveProperty('message');
+          expect(error.response?.data.message).toBe('Team not found');
+        } else {
+          throw error;
+        }
+      }
+    });
   });
 
   describe('POST /teams', () => {

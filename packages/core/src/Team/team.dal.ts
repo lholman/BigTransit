@@ -49,6 +49,10 @@ export async function dalNewTeamWithName(_name: string, resource = DefaultResour
 
 export async function dalGetTeamById(id: string, resource = DefaultResource): Promise<Item | null> {
     
+    if (!uuidValidate(id)) {
+        return null;
+    }
+
     const params = {
         TableName: resource.BigTransit.name,
         Key: {
@@ -59,7 +63,7 @@ export async function dalGetTeamById(id: string, resource = DefaultResource): Pr
 
     try {
         const result = await ddbDocClient.send(new GetCommand(params));
-        return result.Item ? result.Item as Item : null;
+        return result.Item ? (result.Item as Item) : null;
     } catch (error) {
         console.error('Error retrieving team:', error);
         throw error;

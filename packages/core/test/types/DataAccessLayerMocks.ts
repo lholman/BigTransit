@@ -18,6 +18,11 @@ export async function dalGetTeamById()
   return mockItem;
 }
 
+export async function dalDeleteTeamById()
+{
+  return null;
+}
+
 export function generatePK()
 {
   return mockItem.PK;

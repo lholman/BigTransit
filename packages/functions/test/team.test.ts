@@ -99,4 +99,28 @@ describe('Team API Acceptance Tests', () => {
       }
     });
   });  
+
+  describe.todo('DELETE /teams/{id}', () => {
+    let teamToDelete: { id: string, name: string };
+  
+    beforeAll(async () => {
+      teamToDelete = await createTeam('Team to be deleted');
+    });
+  
+    it('should delete an existing team', async () => {
+      const deleteResponse = await axios.delete(`${apiUrl}/teams/${teamToDelete.id}`);
+      expect(deleteResponse.status).toBe(204);
+  
+      try {
+        await axios.get(`${apiUrl}/teams/${teamToDelete.id}`);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          expect(error.response?.status).toBe(404);
+        } else {
+          throw error;
+        }
+      }
+    });
+  });
+  
 });

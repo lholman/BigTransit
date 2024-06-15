@@ -134,4 +134,18 @@ describe('Team data access layer', function() {
     const calls = ddbMock.commandCalls(DeleteCommand);
     expect(calls).toHaveLength(1);
   });
+
+  it('should handle DynamoDB DeleteCommand error gracefully', async () => {
+    ddbMock.on(DeleteCommand).rejects(new Error('DynamoDB error'));
+
+    try {
+      await dalDeleteTeamById('f25e22a1-1924-4c87-bb7f-46b6d087d80f', resourceMock);
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toBe('Failed to delete team with ID f25e22a1-1924-4c87-bb7f-46b6d087d80f: DynamoDB error');
+    }
+  
+    const calls = ddbMock.commandCalls(DeleteCommand);
+    expect(calls).toHaveLength(1);
+  });
 });

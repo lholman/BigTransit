@@ -81,8 +81,13 @@ export async function dalDeleteTeamById(id: string, resource = DefaultResource):
 
     try {
         await ddbDocClient.send(new DeleteCommand(params));
-    } catch (error) {
-        console.error('Error deleting team:', error);
-        throw error;
+    } catch (error: any) {
+        if (error.name === 'ConditionalCheckFailedException') {
+            throw new Error(`Team with ID ${id} not found`);
+        } else if (error.name === 'ResourceNotFoundException') {
+            throw new Error(`DynamoDB table ${params.TableName} not found`);
+        } else {
+            throw new Error(`Failed to delete team with ID ${id}: ${error.message}`);
+        }
     }
 }

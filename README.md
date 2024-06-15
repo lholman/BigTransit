@@ -59,6 +59,29 @@ Big Transit also uses Vitest for acceptance testing the API and Lambda function 
 
 To read more about Vitest see [Adding Vitest to your project](https://vitest.dev/guide/#adding-vitest-to-your-project)
 
+## Continuous Integration
+Big Transit practices true Continuous Integration. Development (at this stage of the project) is completed on the Main branch and commits are integrated very frequently. 
+Each push to the `main` branch triggers the GitHow Workflow [.github/workflows/main.yml](.github/workflows/main.yml) Commit job. 
+
+### The Commit job
+
+* Checks out the code, configures the environment dependencies, including NPM
+* Runs an NPM Audit that errors the Commit job if High or Critical NPM depedencies are found. See [scripts/check-audit.js](scripts/check-audit.js) for the simple logic for this. GitHub Workflow logs for the Commit job will detail the offending package if this happens. To run this check locally simply run `node scripts/check-audit.js`
+* Installs the SST ION deployment Command Line Interface (CLI) and the AWS provider, see [/docs/adr/0003-use-sst-ion-to-build-and-deploy.md](/docs/adr/0003-use-sst-ion-to-build-and-deploy.md) for more detail on SST
+* Runs the TypeScript compiler to catch any TS compilation errors `npm run build`
+* Runs Unit tests `npm run unit`, these require NO deployed infrastructure to run
+* On success of all the above steps, zips up the compiled artifacts and publishes them for subsequent jobs
+
+### The Acceptance job
+On success of the Commit job 
+* Sets up the environment, including Node and SST
+* Downloads the published artifacts from the previous successful Commit job
+* Assumes an AWS role specifically configured to allow deployment from GitHub to an AWS Acceptance account
+* Deploys to the Acceptance environment See [scripts/deploy-acceptance.js](scripts/deploy-acceptance) for the simple logic for this, that extracts the dynamic API URL as an environment variable
+* Runs Acceptance tests `npm run acceptance`, these rely on deployed infrastructure
+* If successful tears down the Acceptance environment, using SST
+
+
 ## Deploying
 SST is also used for deploying. 
 

@@ -80,11 +80,3 @@ On success of the Commit job
 * Deploys to the Acceptance environment See [scripts/deploy-acceptance.js](scripts/deploy-acceptance) for the simple logic for this, that extracts the dynamic API URL as an environment variable
 * Runs Acceptance tests `npm run acceptance`, these rely on deployed infrastructure
 * If successful tears down the Acceptance environment, using SST
-
-
-## Deploying
-SST is also used for deploying. 
-
-```
-sst deploy
-```

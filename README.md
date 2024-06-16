@@ -67,7 +67,7 @@ Big Transit is a mono-repo, consisting of infrastructure, API, domain and data a
     ├── core/
     │   └── src/
     │       └── Team/  // implementaion for the Team domain service
-    │           ├── team.dal.interface.ts   // strongly typed interfact to provide consistency across implementation and testing
+    │           ├── team.dal.interface.ts   // strongly typed interface to provide consistency across implementation and testing
     │           ├── team.dal.ts             // DynamoDB specific Data Access Layer (DAL) implementation to create new and get and delete existing Teams  
     │           ├── team.mapper.ts          // Encapsulated logic to map a DAL Item type to a Team domain object and vice versa
     │           └── team.ts                 // Team domain service implementation (i.e. business logic) to create new and get and delete existing Teams
@@ -75,8 +75,22 @@ Big Transit is a mono-repo, consisting of infrastructure, API, domain and data a
     │       ├── types/  // Mock implementations to decouple unit tests from needing DynamoDB to run
     |           ├── DataAccessLayerMocks.ts // Mock Team DAL interface implementation to simplify testing the DAL
     |           └── ResourceMocks.ts        // Some simple SST mocks again to simplify unit testing 
-    │       ├── team.dal.test.ts        // unit tests supporting the DynamoDB DAL implementation
+    │       ├── team.dal.test.ts        // unit tests supporting the DynamoDB DAL implementation for Teams
     │       └── team.test.ts            // unit tests for the Team domain service
+    ├── tsconfig.json    // You know, because we have to sometimes
+```
+
+### The Big Transit API is implemented and tested from `./packages/functions/`
+
+```
+└── packages/
+    ├── functions/
+    │   └── src/
+    │       └── Team/  // implementaion for the /teams REST API  
+    │           └── team.ts                 // Lambda function(s) implementation for the /teams REST API 
+    │   └── test/ 
+    │       └── team.test.ts            // acceptance tests for the /teams REST API
+    ├── sst-env.d.ts     // SST generated file for linking resources (I think)
     ├── tsconfig.json    // You know, because we have to sometimes
 ```
 

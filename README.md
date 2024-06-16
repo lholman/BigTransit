@@ -51,13 +51,33 @@ This will start Big Transit using SST Live. Live is a feature of SST that lets y
 ## 🗂️ Repo structure
 Big Transit is a mono-repo, consisting of infrastructure, API, domain and data access layer. See [docs/adr/0002-use-monorepo-for-backend-and-infrastructure.md](docs/adr/0002-use-monorepo-for-backend-and-infrastructure.md)
 
-### Infrastructure is defined using SST from `/infra/app.js`
+### Big Transit infrastructure is defined using SST from `./infra/`
 
 ```
 └── infra/
     ├── api.ts      // AWS Api Gateway and URL path configuration
-    ├── database.ts // AWS DynamoDB single-table configuration See [docs/adr/0005-use-dynamodb-single-table-design-for-data-storage.md](docs/adr/0005-use-dynamodb-single-table-design-for-data-storage.md) 
+    ├── database.ts // AWS DynamoDB single-table configuration
     ├── index.ts    // SST exports for api and database
+```
+
+### The Big Transit domain service is implemented and tested from `./packages/core/`
+
+```
+└── packages/
+    ├── core/
+    │   └── src/
+    │       └── Team/  // implementaion for the Team domain service
+    │           ├── team.dal.interface.ts   // strongly typed interfact to provide consistency across implementation and testing
+    │           ├── team.dal.ts             // DynamoDB specific Data Access Layer (DAL) implementation to create new and get and delete existing Teams  
+    │           ├── team.mapper.ts          // Encapsulated logic to map a DAL Item type to a Team domain object and vice versa
+    │           └── team.ts                 // Team domain service implementation (i.e. business logic) to create new and get and delete existing Teams
+    │   └── test/ 
+    │       ├── types/  // Mock implementations to decouple unit tests from needing DynamoDB to run
+    |           ├── DataAccessLayerMocks.ts // Mock Team DAL interface implementation to simplify testing the DAL
+    |           └── ResourceMocks.ts        // Some simple SST mocks again to simplify unit testing 
+    │       ├── team.dal.test.ts        // unit tests supporting the DynamoDB DAL implementation
+    │       └── team.test.ts            // unit tests for the Team domain service
+    ├── tsconfig.json    // You know, because we have to sometimes
 ```
 
 ## 👩‍💻 Testing 

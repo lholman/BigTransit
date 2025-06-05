@@ -31,7 +31,7 @@ describe('Team API Acceptance Tests', () => {
       console.error('Error in beforeAll:', error);
       throw error;
     }
-  });
+  }, 30000);
 
   afterAll(async () => {
     // await axios.delete(`${apiUrl}/teams/${createdTeam.id}`);

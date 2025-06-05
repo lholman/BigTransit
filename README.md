@@ -18,7 +18,7 @@ adr list
 ```
 
 ### Node.js
-Big Transit requires Node.js version 20.9.9 or higher. The goal is always to be running Node major version -1 at the oldest.
+Big Transit requires Node.js version 21.x or higher. The goal is always to be running Node major version -1 at the oldest.
 Install Node.js from the official website: https://nodejs.org/
 
 If you have a different version of Node.js installed on your machine, you can use a version manager like NVM to switch between different versions.

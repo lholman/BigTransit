@@ -87,8 +87,8 @@ jobs:
       - name: Check SST version
         run: sst version
 
-      - name: Force SST ION CLI to version 0.0.423
-        run: sst upgrade 0.0.423
+      - name: Force SST ION CLI to version 3.17.0
+        run: sst upgrade 3.17.0
 
       - name: Check SST version
         run: sst version

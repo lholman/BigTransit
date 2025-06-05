@@ -53,7 +53,7 @@ node scripts/check-audit.js  # Check for high/critical npm vulnerabilities
 
 ## Development Notes
 
-- Uses Node.js 20.9.9+
+- Uses Node.js 21.x+
 - Vitest for testing with coverage reporting
 - TypeScript strict mode
 - True Continuous Integration on main branch

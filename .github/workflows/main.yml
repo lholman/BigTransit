@@ -27,13 +27,13 @@ jobs:
         run: node scripts/check-audit.js    
 
       - name: Install SST ION deployment CLI
-        run: curl -fsSL https://ion.sst.dev/install | bash
+        run: curl -fsSL https://sst.dev/install | bash
 
       - name: Check SST version
         run: sst version
 
-      - name: Force SST ION CLI to version 0.0.423
-        run: sst upgrade 0.0.423
+      - name: Force SST ION CLI to version 3.17.0
+        run: sst upgrade 3.17.0
 
       - name: Check SST version
         run: sst version
@@ -82,7 +82,7 @@ jobs:
         run: tar -xzf artifacts.tar.gz
 
       - name: Install SST ION deployment CLI
-        run: curl -fsSL https://ion.sst.dev/install | bash
+        run: curl -fsSL https://sst.dev/install | bash
 
       - name: Check SST version
         run: sst version

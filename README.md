@@ -94,6 +94,35 @@ Big Transit is a mono-repo, consisting of infrastructure, API, domain and data a
     ├── tsconfig.json    // You know, because we have to sometimes
 ```
 
+### The Example Frontend is located in `./examples/frontend/`
+
+```
+└── examples/
+    └── frontend/
+        ├── src/
+        │   ├── views/        // React components for each view
+        │   ├── App.jsx       // Main application component
+        │   └── main.jsx      // Entry point for the React app
+        ├── index.html        // HTML entry point
+        ├── vite.config.js    // Vite configuration
+        └── vitest.config.js  // Vitest configuration for testing
+```
+
+#### Running the Frontend Locally
+To run the example frontend locally:
+```sh
+cd examples/frontend
+npm install
+npm run dev
+```
+
+#### Testing the Frontend
+To run the frontend unit tests:
+```sh
+cd examples/frontend
+npm run test
+```
+
 ## 👩‍💻 Testing 
 Big Transit uses Vitest for unit testing domain code implementation, i.e. the business logic within the `packages/core/src` folders for each domain. To run tests use the handy npm alias.
 

@@ -46,7 +46,12 @@ jobs:
 
       - name: Run Unit Tests
         run: npm run unit
-        
+      - name: Run Frontend Unit Tests
+        run: |
+          cd examples/frontend
+          npm install
+          npm test
+
       - name: Archive node_modules and .sst
         run: tar -czf artifacts.tar.gz node_modules .sst
 
